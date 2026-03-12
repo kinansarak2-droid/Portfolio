@@ -2,27 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
+/* ─── Design Tokens ─────────────────────────────────────── */
+:root {
+  --bg:       #1C0282;
+  --emerald:  #B3F0CA;
+  --yellow:   #FAF189;
+  --red:      #FB9790;
+  --white:    #FFFFFF;
+  --white-60: rgba(255, 255, 255, 0.6);
+  --white-30: rgba(255, 255, 255, 0.3);
+  --white-10: rgba(255, 255, 255, 0.1);
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+/* ─── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 
-  ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
+body {
+  background-color: var(--bg);
+  color: var(--white);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  cursor: none;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Selection ──────────────────────────────────────────── */
+::selection {
+  background: var(--emerald);
+  color: var(--bg);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: rgba(179,240,202,0.25); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--emerald); }
+
+/* ─── Custom Cursor ──────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--emerald);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(179, 240, 202, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              background 0.35s,
+              border-color 0.35s;
+}
+
+.cursor-ring.is-hovering {
+  width: 64px;
+  height: 64px;
+  background: rgba(179, 240, 202, 0.06);
+  border-color: var(--emerald);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
