@@ -1,0 +1,22 @@
+/**
+ * Cursor Override
+ *
+ * Hides the native OS cursor globally so the custom
+ * <Cursor /> component can take over.
+ *
+ * NOTE: Only applied when .custom-cursor class is on <html> or <body>.
+ * The Cursor component adds/removes this class on mount.
+ */
+
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
+/* Restore cursor on mobile (no pointer device) */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor * {
+    cursor: auto !important;
+  }
+}

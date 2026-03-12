@@ -1,0 +1,33 @@
+/**
+ * Font Declarations
+ *
+ * Uncomment and update the @font-face blocks below once you've
+ * dropped your font files into public/assets/fonts/[FontName]/
+ */
+
+/*
+@font-face {
+  font-family: 'YourFont';
+  src: url('/assets/fonts/YourFont/Regular.woff2') format('woff2'),
+       url('/assets/fonts/YourFont/Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'YourFont';
+  src: url('/assets/fonts/YourFont/Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'YourFont';
+  src: url('/assets/fonts/YourFont/Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
