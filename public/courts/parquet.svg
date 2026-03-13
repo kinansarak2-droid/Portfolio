@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" width="940" height="500">
+
+  <!-- Wood base -->
+  <rect width="940" height="500" fill="#8B5E2C"/>
+
+  <!-- Parquet plank pattern (herringbone-style alternating grain) -->
+  <!-- Row 0 -->
+  <line x1="0"   y1="0"  x2="940" y2="0"  stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="20"  y1="0"  x2="20"  y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="60"  y1="0"  x2="60"  y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="100" y1="0"  x2="100" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="140" y1="0"  x2="140" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="180" y1="0"  x2="180" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="220" y1="0"  x2="220" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="260" y1="0"  x2="260" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="300" y1="0"  x2="300" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="340" y1="0"  x2="340" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="380" y1="0"  x2="380" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="420" y1="0"  x2="420" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="460" y1="0"  x2="460" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="500" y1="0"  x2="500" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="540" y1="0"  x2="540" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="580" y1="0"  x2="580" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="620" y1="0"  x2="620" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="660" y1="0"  x2="660" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="700" y1="0"  x2="700" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="740" y1="0"  x2="740" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="780" y1="0"  x2="780" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="820" y1="0"  x2="820" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="860" y1="0"  x2="860" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <line x1="900" y1="0"  x2="900" y2="28" stroke="rgba(0,0,0,0.07)" stroke-width="0.5"/>
+  <!-- Row 1 horizontal grain -->
+  <line x1="0" y1="28" x2="940" y2="28" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="42" x2="940" y2="42" stroke="rgba(0,0,0,0.05)" stroke-width="0.5"/>
+  <!-- Row 2 -->
+  <line x1="0" y1="56" x2="940" y2="56" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="84" x2="940" y2="84" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="112" x2="940" y2="112" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="140" x2="940" y2="140" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="168" x2="940" y2="168" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="196" x2="940" y2="196" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="224" x2="940" y2="224" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="252" x2="940" y2="252" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="280" x2="940" y2="280" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="308" x2="940" y2="308" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="336" x2="940" y2="336" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="364" x2="940" y2="364" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="392" x2="940" y2="392" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="420" x2="940" y2="420" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="448" x2="940" y2="448" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+  <line x1="0" y1="476" x2="940" y2="476" stroke="rgba(0,0,0,0.10)" stroke-width="0.8"/>
+
+  <!-- ── VOLLEYBALL COURT ── -->
+  <!-- Outer boundary -->
+  <rect x="80" y="60" width="780" height="380" fill="none" stroke="white" stroke-width="3"/>
+  <!-- Net line -->
+  <line x1="470" y1="60" x2="470" y2="440" stroke="white" stroke-width="3"/>
+  <!-- Attack lines -->
+  <line x1="230" y1="60" x2="230" y2="440" stroke="white" stroke-width="2" stroke-dasharray="10 6"/>
+  <line x1="710" y1="60" x2="710" y2="440" stroke="white" stroke-width="2" stroke-dasharray="10 6"/>
+  <!-- Service zone markers -->
+  <line x1="80"  y1="180" x2="80"  y2="320" stroke="#FB9790" stroke-width="2" stroke-dasharray="8 5"/>
+  <line x1="860" y1="180" x2="860" y2="320" stroke="#FB9790" stroke-width="2" stroke-dasharray="8 5"/>
+  <!-- Centre mark -->
+  <line x1="455" y1="248" x2="485" y2="248" stroke="white" stroke-width="2"/>
+  <line x1="470" y1="233" x2="470" y2="267" stroke="white" stroke-width="2"/>
+
+  <!-- ── BADMINTON DOUBLES COURT ── -->
+  <rect x="160" y="100" width="620" height="300" fill="none" stroke="#FAF189" stroke-width="1.5" opacity="0.6"/>
+  <!-- Badminton net line -->
+  <line x1="160" y1="250" x2="780" y2="250" stroke="#FAF189" stroke-width="1.5" opacity="0.6"/>
+  <!-- Short service line (doubles) -->
+  <line x1="160" y1="173" x2="780" y2="173" stroke="#FAF189" stroke-width="1" opacity="0.4"/>
+  <line x1="160" y1="327" x2="780" y2="327" stroke="#FAF189" stroke-width="1" opacity="0.4"/>
+  <!-- Long service line (doubles) - already outer boundary -->
+  <!-- Centre service line -->
+  <line x1="470" y1="100" x2="470" y2="400" stroke="#FAF189" stroke-width="1" opacity="0.4"/>
+
+</svg>

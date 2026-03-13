@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" width="940" height="500">
+
+  <!-- Polyurethane base -->
+  <rect width="940" height="500" fill="#1C4FA8"/>
+
+  <!-- Surface texture dots -->
+  <circle cx="15"  cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="45"  cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="75"  cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="105" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="135" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="165" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="195" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="225" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="255" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="285" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="315" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="345" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="375" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="405" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="435" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="465" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="495" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="525" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="555" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="585" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="615" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="645" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="675" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="705" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="735" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="765" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="795" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="825" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="855" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="885" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="915" cy="13"  r="1.5" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- ── BASKETBALL (white) ── -->
+  <!-- Outer boundary -->
+  <rect x="30" y="30" width="880" height="440" fill="none" stroke="white" stroke-width="2.5"/>
+  <!-- Centre line -->
+  <line x1="470" y1="30" x2="470" y2="470" stroke="white" stroke-width="2"/>
+  <!-- Centre circle -->
+  <circle cx="470" cy="250" r="60" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Centre dot -->
+  <circle cx="470" cy="250" r="4" fill="#FAF189"/>
+
+  <!-- Left key -->
+  <rect x="30" y="160" width="168" height="180" fill="rgba(251,151,144,0.12)" stroke="#FB9790" stroke-width="2"/>
+  <path d="M198,160 A60,60 0 0 1 198,340" fill="none" stroke="#FB9790" stroke-width="2"/>
+  <circle cx="56" cy="250" r="20" fill="none" stroke="#FB9790" stroke-width="2"/>
+  <!-- Left 3-point lines -->
+  <line x1="30" y1="96"  x2="195" y2="96"  stroke="white" stroke-width="1.5"/>
+  <line x1="30" y1="404" x2="195" y2="404" stroke="white" stroke-width="1.5"/>
+  <path d="M195,96 A258,258 0 0 1 195,404" fill="none" stroke="white" stroke-width="1.5"/>
+
+  <!-- Right key -->
+  <rect x="742" y="160" width="168" height="180" fill="rgba(251,151,144,0.12)" stroke="#FB9790" stroke-width="2"/>
+  <path d="M742,160 A60,60 0 0 0 742,340" fill="none" stroke="#FB9790" stroke-width="2"/>
+  <circle cx="884" cy="250" r="20" fill="none" stroke="#FB9790" stroke-width="2"/>
+  <!-- Right 3-point lines -->
+  <line x1="910" y1="96"  x2="745" y2="96"  stroke="white" stroke-width="1.5"/>
+  <line x1="910" y1="404" x2="745" y2="404" stroke="white" stroke-width="1.5"/>
+  <path d="M745,96 A258,258 0 0 0 745,404" fill="none" stroke="white" stroke-width="1.5"/>
+
+  <!-- ── VOLLEYBALL (yellow dashed) ── -->
+  <rect x="130" y="80" width="680" height="340" fill="none" stroke="#FAF189" stroke-width="2" stroke-dasharray="14 7"/>
+  <!-- Attack lines -->
+  <line x1="130" y1="80"  x2="810" y2="80"  stroke="#FAF189" stroke-width="1.5" stroke-dasharray="10 6" opacity="0.6"/>
+  <line x1="357" y1="80"  x2="357" y2="420" stroke="#FAF189" stroke-width="1.5" stroke-dasharray="10 6" opacity="0.6"/>
+  <line x1="583" y1="80"  x2="583" y2="420" stroke="#FAF189" stroke-width="1.5" stroke-dasharray="10 6" opacity="0.6"/>
+
+  <!-- ── BADMINTON singles (emerald) ── -->
+  <rect x="200" y="110" width="540" height="280" fill="none" stroke="rgba(179,240,202,0.5)" stroke-width="1.5"/>
+  <line x1="200" y1="250" x2="740" y2="250" stroke="rgba(179,240,202,0.5)" stroke-width="1.5"/>
+  <line x1="470" y1="110" x2="470" y2="390" stroke="rgba(179,240,202,0.3)" stroke-width="1"/>
+
+</svg>
