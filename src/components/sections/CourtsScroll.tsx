@@ -172,15 +172,24 @@ function CourtPanel({
   });
 
   /* 50 % → 100 % as the user scrolls the court to the centre.
-     Fast scroll = partial reveal; slow scroll = full open.             */
+     Fast scroll = partial reveal; slow scroll = full open.
+     String output for CSS height — all derived opacity/y use
+     scrollYProgress directly to avoid MotionValue<string> type errors. */
   const heightPct = useTransform(scrollYProgress, [0.18, 0.52], ["50%", "100%"]);
 
+  /* Equivalent scroll positions for each height milestone:
+     50% = 0.18 | 60% = 0.25 | 70% = 0.32 | 80% = 0.38
+     90% = 0.45 | 95% = 0.49 | 98% = 0.51 | 100% = 0.52   */
+  const edgeOpacity   = useTransform(scrollYProgress, [0.18, 0.45], [1, 0]);
+  const infoOpacity   = useTransform(scrollYProgress, [0.25, 0.45], [0, 1]);
+  const infoY         = useTransform(scrollYProgress, [0.25, 0.45], [24, 0]);
+  const counterOpacity = useTransform(scrollYProgress, [0.32, 0.49], [0, 1]);
+
   /* Track whether the court is fully open so clicks are enabled */
-  useMotionValueEvent(heightPct, "change", (v) => {
-    const num = parseFloat(v as string);
-    setIsExpanded(num >= 98);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setIsExpanded(v >= 0.51);
     /* Close projects if user scrolls away */
-    if (num < 80) setProjectsOpen(false);
+    if (v < 0.38) setProjectsOpen(false);
   });
 
   /* ── Hover → delayed pulse indicator ──────────────────── */
@@ -290,7 +299,7 @@ function CourtPanel({
             right: "5%",
             height: "1px",
             background: `linear-gradient(to right, transparent, ${court.accent}60, transparent)`,
-            opacity: useTransform(heightPct, ["50%", "90%"], [1, 0]),
+            opacity: edgeOpacity,
           }}
         />
         {/* Bottom edge */}
@@ -302,7 +311,7 @@ function CourtPanel({
             right: "5%",
             height: "1px",
             background: `linear-gradient(to right, transparent, ${court.accent}60, transparent)`,
-            opacity: useTransform(heightPct, ["50%", "90%"], [1, 0]),
+            opacity: edgeOpacity,
           }}
         />
       </motion.div>
@@ -384,8 +393,8 @@ function CourtPanel({
           zIndex: 10,
           pointerEvents: "none",
           maxWidth: "520px",
-          opacity: useTransform(heightPct, ["60%", "90%"], [0, 1]),
-          y: useTransform(heightPct, ["60%", "90%"], [24, 0]),
+          opacity: infoOpacity,
+          y: infoY,
         }}
       >
         <motion.span
@@ -439,7 +448,7 @@ function CourtPanel({
           textAlign: "right",
           zIndex: 10,
           pointerEvents: "none",
-          opacity: useTransform(heightPct, ["70%", "95%"], [0, 1]),
+          opacity: counterOpacity,
         }}
       >
         <motion.p
