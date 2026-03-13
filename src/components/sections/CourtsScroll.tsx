@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 
 /* ─── Court data ─────────────────────────────────────────── */
 const COURTS = [
@@ -47,7 +47,7 @@ const COURTS = [
   },
 ];
 
-/* ─── Placeholder project data (6 per court) ─────────────── */
+/* ─── Placeholder projects ───────────────────────────────── */
 const PROJECTS = [
   { id: 1, label: "Project 01", year: "2024" },
   { id: 2, label: "Project 02", year: "2024" },
@@ -61,21 +61,18 @@ const PROJECTS = [
 export default function CourtsScroll() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  /* Intersection observer — mark active court */
   useEffect(() => {
     const sections = document.querySelectorAll("[data-court-index]");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const idx = parseInt(
-              entry.target.getAttribute("data-court-index") ?? "0"
-            );
+            const idx = parseInt(entry.target.getAttribute("data-court-index") ?? "0");
             setActiveIndex(idx);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.4 }
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
@@ -84,7 +81,7 @@ export default function CourtsScroll() {
   return (
     <section id="courts" style={{ position: "relative" }}>
 
-      {/* ── Fixed side nav dots ── */}
+      {/* Side nav dots */}
       <div style={{
         position: "fixed",
         right: "32px",
@@ -100,8 +97,7 @@ export default function CourtsScroll() {
           <button
             key={c.id}
             onClick={() =>
-              document
-                .querySelector(`[data-court-index="${i}"]`)
+              document.querySelector(`[data-court-index="${i}"]`)
                 ?.scrollIntoView({ behavior: "smooth" })
             }
             title={c.label}
@@ -109,8 +105,7 @@ export default function CourtsScroll() {
               width: activeIndex === i ? 28 : 8,
               height: 8,
               borderRadius: 4,
-              background:
-                activeIndex === i ? c.accent : "rgba(255,255,255,0.35)",
+              background: activeIndex === i ? c.accent : "rgba(255,255,255,0.35)",
               border: "none",
               cursor: "pointer",
               transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
@@ -120,7 +115,7 @@ export default function CourtsScroll() {
         ))}
       </div>
 
-      {/* ── Sticky label ── */}
+      {/* Sticky label */}
       <div style={{
         position: "sticky",
         top: 0,
@@ -142,67 +137,88 @@ export default function CourtsScroll() {
         </motion.p>
       </div>
 
-      {/* ── Court panels ── */}
       {COURTS.map((court, i) => (
-        <CourtPanel
-          key={court.id}
-          court={court}
-          index={i}
-          isActive={activeIndex === i}
-        />
+        <CourtPanel key={court.id} court={court} index={i} />
       ))}
 
-      {/* ── Closing fade ── */}
-      <div style={{
-        height: "60px",
-        background: "linear-gradient(to bottom, #B84B20, #1C0282)",
-      }} />
+      <div style={{ height: "60px", background: "linear-gradient(to bottom, #B84B20, #1C0282)" }} />
     </section>
   );
 }
 
-/* ─── Individual court panel ─────────────────────────────── */
+/* ─── Court panel ────────────────────────────────────────── */
 function CourtPanel({
   court,
   index,
-  isActive,
 }: {
   court: (typeof COURTS)[0];
   index: number;
-  isActive: boolean;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
-  const expandTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isExpanded, setIsExpanded]     = useState(false);
+  const [isHovering, setIsHovering]     = useState(false);
+  const [showPulse, setShowPulse]       = useState(false);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* When panel becomes active → start expansion timer */
-  useEffect(() => {
-    if (isActive) {
-      /* Reset so it animates in fresh each time you arrive */
-      setExpanded(false);
-      setProjectsOpen(false);
-      expandTimer.current = setTimeout(() => {
-        setExpanded(true);
-      }, 1400); // 1.4 s dwell before expanding
-    } else {
-      if (expandTimer.current) clearTimeout(expandTimer.current);
-      setExpanded(false);
-      setProjectsOpen(false);
+  /* ── Scroll-driven height ──────────────────────────────── */
+  /* offset: section enters from below → section exits above
+     scrollYProgress 0   = top of panel touches bottom of viewport
+     scrollYProgress 0.5 = panel is centred in viewport
+     scrollYProgress 1   = bottom of panel touches top of viewport      */
+  const { scrollYProgress } = useScroll({
+    target: panelRef,
+    offset: ["start end", "end start"],
+  });
+
+  /* 50 % → 100 % as the user scrolls the court to the centre.
+     Fast scroll = partial reveal; slow scroll = full open.             */
+  const heightPct = useTransform(scrollYProgress, [0.18, 0.52], ["50%", "100%"]);
+
+  /* Track whether the court is fully open so clicks are enabled */
+  useMotionValueEvent(heightPct, "change", (v) => {
+    const num = parseFloat(v as string);
+    setIsExpanded(num >= 98);
+    /* Close projects if user scrolls away */
+    if (num < 80) setProjectsOpen(false);
+  });
+
+  /* ── Hover → delayed pulse indicator ──────────────────── */
+  const handleMouseEnter = useCallback(() => {
+    setIsHovering(true);
+    if (isExpanded) {
+      hoverTimer.current = setTimeout(() => setShowPulse(true), 500);
     }
-    return () => {
-      if (expandTimer.current) clearTimeout(expandTimer.current);
-    };
-  }, [isActive]);
+  }, [isExpanded]);
 
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+    setShowPulse(false);
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+  }, []);
+
+  /* Reset pulse timer when expansion state changes */
+  useEffect(() => {
+    if (!isExpanded) {
+      setShowPulse(false);
+      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    }
+  }, [isExpanded]);
+
+  /* ── Click ─────────────────────────────────────────────── */
   const handleClick = useCallback(() => {
-    if (expanded) setProjectsOpen((p) => !p);
-  }, [expanded]);
+    if (!isExpanded) return;
+    setProjectsOpen((p) => !p);
+    setShowPulse(false);
+  }, [isExpanded]);
 
   return (
     <div
       ref={panelRef}
       data-court-index={index}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       style={{
         position: "relative",
         width: "100%",
@@ -211,30 +227,24 @@ function CourtPanel({
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        background: "#1C0282", /* indigo bg shows during collapsed state */
-        cursor: expanded ? "pointer" : "default",
+        background: "#1C0282",
+        cursor: isExpanded ? "pointer" : "default",
       }}
-      onClick={handleClick}
     >
 
-      {/* ── Court SVG — expands from centre ── */}
+      {/* ── Court SVG — scroll-driven height centred ── */}
       <motion.div
-        animate={{
-          height: expanded ? "100%" : "50%",
-        }}
-        transition={{
-          duration: 1.1,
-          ease: [0.16, 1, 0.3, 1],
-        }}
         style={{
           position: "absolute",
           left: 0,
           right: 0,
           top: "50%",
-          transform: "translateY(-50%)",
+          translateY: "-50%",
+          height: heightPct,
           overflow: "hidden",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={court.svgSrc}
           alt={court.label}
@@ -249,109 +259,106 @@ function CourtPanel({
           }}
         />
 
-        {/* Vignette — stronger while collapsed */}
+        {/* Bottom vignette */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.04) 50%, transparent 100%)",
+          pointerEvents: "none",
+        }} />
+      </motion.div>
+
+      {/* ── Crop edge lines (visible while collapsed) ── */}
+      <motion.div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "50%",
+          translateY: "-50%",
+          height: heightPct,
+          pointerEvents: "none",
+          zIndex: 4,
+        }}
+      >
+        {/* Top edge */}
         <motion.div
-          animate={{ opacity: expanded ? 0.45 : 0.72 }}
-          transition={{ duration: 0.9 }}
           style={{
             position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.04) 45%, transparent 100%)",
-            pointerEvents: "none",
+            top: 0,
+            left: "5%",
+            right: "5%",
+            height: "1px",
+            background: `linear-gradient(to right, transparent, ${court.accent}60, transparent)`,
+            opacity: useTransform(heightPct, ["50%", "90%"], [1, 0]),
+          }}
+        />
+        {/* Bottom edge */}
+        <motion.div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "5%",
+            right: "5%",
+            height: "1px",
+            background: `linear-gradient(to right, transparent, ${court.accent}60, transparent)`,
+            opacity: useTransform(heightPct, ["50%", "90%"], [1, 0]),
           }}
         />
       </motion.div>
 
-      {/* ── Hint lines visible during collapsed state ── */}
+      {/* ── Sonar pulse — appears after hovering on expanded court ── */}
       <AnimatePresence>
-        {!expanded && (
+        {isExpanded && showPulse && !projectsOpen && (
           <motion.div
+            key="pulse"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.3 }}
             style={{
               position: "absolute",
               inset: 0,
-              pointerEvents: "none",
-              zIndex: 2,
-            }}
-          >
-            {/* Top edge line */}
-            <motion.div
-              animate={{ scaleX: isActive ? 1 : 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              style={{
-                position: "absolute",
-                top: "25%",
-                left: 0,
-                right: 0,
-                height: "1px",
-                background: `linear-gradient(to right, transparent, ${court.accent}55, transparent)`,
-                transformOrigin: "left",
-              }}
-            />
-            {/* Bottom edge line */}
-            <motion.div
-              animate={{ scaleX: isActive ? 1 : 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              style={{
-                position: "absolute",
-                bottom: "25%",
-                left: 0,
-                right: 0,
-                height: "1px",
-                background: `linear-gradient(to right, transparent, ${court.accent}55, transparent)`,
-                transformOrigin: "right",
-              }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Click hint (appears when expanded, before first click) ── */}
-      <AnimatePresence>
-        {expanded && !projectsOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            style={{
-              position: "absolute",
-              bottom: "68px",
-              right: "48px",
-              zIndex: 10,
-              pointerEvents: "none",
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              justifyContent: "center",
+              pointerEvents: "none",
+              zIndex: 15,
             }}
           >
-            <motion.span
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                fontSize: "10px",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: court.accent,
-              }}
-            >
-              Tap to explore projects
-            </motion.span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <circle cx="7" cy="7" r="6" stroke={court.accent} strokeWidth="1.2"/>
-              <line x1="7" y1="4" x2="7" y2="10" stroke={court.accent} strokeWidth="1.2" strokeLinecap="round"/>
-              <line x1="4" y1="7" x2="10" y2="7" stroke={court.accent} strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
+            {/* Three expanding rings */}
+            {[0, 0.45, 0.9].map((delay, ri) => (
+              <motion.div
+                key={ri}
+                animate={{ scale: [0.4, 2.2], opacity: [0.7, 0] }}
+                transition={{
+                  duration: 2,
+                  delay,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                }}
+                style={{
+                  position: "absolute",
+                  width: 72,
+                  height: 72,
+                  borderRadius: "50%",
+                  border: `1.5px solid ${court.accent}`,
+                }}
+              />
+            ))}
+            {/* Centre dot */}
+            <div style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: court.accent,
+              boxShadow: `0 0 12px ${court.accent}`,
+            }} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── Ghost index number ── */}
+      {/* ── Ghost index ── */}
       <span style={{
         position: "absolute",
         top: "28px",
@@ -368,13 +375,8 @@ function CourtPanel({
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      {/* ── Bottom-left info block ── */}
+      {/* ── Info block — fades in as court expands ── */}
       <motion.div
-        animate={{
-          y: expanded ? 0 : 16,
-          opacity: expanded ? 1 : 0,
-        }}
-        transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         style={{
           position: "absolute",
           bottom: "56px",
@@ -382,6 +384,8 @@ function CourtPanel({
           zIndex: 10,
           pointerEvents: "none",
           maxWidth: "520px",
+          opacity: useTransform(heightPct, ["60%", "90%"], [0, 1]),
+          y: useTransform(heightPct, ["60%", "90%"], [24, 0]),
         }}
       >
         <motion.span
@@ -426,10 +430,8 @@ function CourtPanel({
         </p>
       </motion.div>
 
-      {/* ── Progress counter ── */}
+      {/* ── Counter ── */}
       <motion.div
-        animate={{ opacity: expanded ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
         style={{
           position: "absolute",
           right: "48px",
@@ -437,6 +439,7 @@ function CourtPanel({
           textAlign: "right",
           zIndex: 10,
           pointerEvents: "none",
+          opacity: useTransform(heightPct, ["70%", "95%"], [0, 1]),
         }}
       >
         <motion.p
@@ -462,7 +465,7 @@ function CourtPanel({
         </p>
       </motion.div>
 
-      {/* ── Projects toolbar ── */}
+      {/* ── Projects toolbar — only when clicked ── */}
       <AnimatePresence>
         {projectsOpen && (
           <motion.div
@@ -478,14 +481,12 @@ function CourtPanel({
               right: 0,
               zIndex: 20,
               padding: "20px 32px 28px",
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.62) 100%)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              borderTop: `1px solid ${court.accent}22`,
+              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.65) 100%)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
+              borderTop: `1px solid ${court.accent}25`,
             }}
           >
-            {/* Toolbar header */}
             <div style={{
               display: "flex",
               alignItems: "center",
@@ -507,10 +508,10 @@ function CourtPanel({
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  color: "rgba(255,255,255,0.5)",
+                  color: "rgba(255,255,255,0.45)",
                   fontFamily: "var(--font-dm-sans)",
                   fontSize: "11px",
-                  letterSpacing: "0.1em",
+                  letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   padding: "4px 0",
                 }}
@@ -519,7 +520,6 @@ function CourtPanel({
               </button>
             </div>
 
-            {/* 6 project squares */}
             <div style={{
               display: "grid",
               gridTemplateColumns: "repeat(6, 1fr)",
@@ -530,37 +530,27 @@ function CourtPanel({
                   key={proj.id}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.05 + pi * 0.06,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
+                  transition={{ duration: 0.4, delay: 0.04 + pi * 0.055, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ borderColor: `${court.accent}70`, background: `${court.accent}12` }}
                   style={{
                     aspectRatio: "1 / 1",
-                    background: "rgba(255,255,255,0.06)",
-                    border: `1px solid rgba(255,255,255,0.1)`,
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.09)",
                     borderRadius: "4px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "flex-end",
                     padding: "10px",
                     cursor: "pointer",
-                    transition: "background 0.2s, border-color 0.2s",
                     overflow: "hidden",
                     position: "relative",
                   }}
-                  whileHover={{
-                    background: `${court.accent}18`,
-                    borderColor: `${court.accent}55`,
-                  }}
                 >
-                  {/* Placeholder square fill */}
                   <div style={{
                     position: "absolute",
                     inset: 0,
-                    background: `linear-gradient(135deg, ${court.accent}10 0%, transparent 60%)`,
+                    background: `linear-gradient(135deg, ${court.accent}0D 0%, transparent 55%)`,
                   }} />
-
                   <p style={{
                     fontFamily: "var(--font-syne)",
                     fontWeight: 700,
@@ -568,18 +558,16 @@ function CourtPanel({
                     color: "#FFFFFF",
                     lineHeight: 1.2,
                     position: "relative",
-                    zIndex: 1,
                   }}>
                     {proj.label}
                   </p>
                   <p style={{
                     fontFamily: "var(--font-dm-sans)",
                     fontSize: "9px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: "rgba(255,255,255,0.38)",
                     letterSpacing: "0.08em",
-                    marginTop: "2px",
+                    marginTop: "3px",
                     position: "relative",
-                    zIndex: 1,
                   }}>
                     {proj.year}
                   </p>
@@ -589,43 +577,6 @@ function CourtPanel({
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* ── Scroll cue on first panel only ── */}
-      {index === 0 && !expanded && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, delay: 0.5 }}
-          style={{
-            position: "absolute",
-            bottom: "32px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            pointerEvents: "none",
-            zIndex: 5,
-          }}
-        >
-          <span style={{
-            fontFamily: "var(--font-dm-sans)",
-            fontSize: "10px",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: court.accent,
-          }}>Scroll</span>
-          <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-            <rect x="6" y="1" width="4" height="8" rx="2" stroke={court.accent} strokeWidth="1.5"/>
-            <circle cx="8" cy="4" r="1.5" fill={court.accent}>
-              <animateTransform attributeName="transform" type="translate"
-                values="0,0;0,3;0,0" dur="1.6s" repeatCount="indefinite"/>
-            </circle>
-            <path d="M4 18 L8 22 L12 18" stroke={court.accent} strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-        </motion.div>
-      )}
 
     </div>
   );
