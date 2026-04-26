@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import Cursor from "@/components/layout/Cursor";
 import Navbar from "@/components/layout/Navbar";
+import { LocaleProvider } from "@/context/LocaleContext";
 import "./globals.css";
 
 const syne = Syne({
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body>
-        <Cursor />
-        <Navbar />
-        {children}
+        <LocaleProvider>
+          <Cursor />
+          <Navbar />
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );
