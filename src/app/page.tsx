@@ -1,17 +1,17 @@
-import Hero         from "@/components/sections/Hero";
-import CourtsScroll from "@/components/sections/CourtsScroll";
-import Work         from "@/components/sections/Work";
-import About        from "@/components/sections/About";
-import Contact      from "@/components/sections/Contact";
+/**
+ * Home page — content driven by src/data/home.ts.
+ * Sections are rendered by `<HomeSectionRenderer />`.
+ * Server component: it just composes a client renderer and layout.
+ */
 
-export default function Home() {
+import Layout from "@/components/layout/Layout";
+import HomeSectionRenderer from "@/components/home/HomeSectionRenderer";
+import { homeSections } from "@/data/home";
+
+export default function HomePage() {
   return (
-    <main>
-      <Hero />
-      <CourtsScroll />
-      <Work />
-      <About />
-      <Contact />
-    </main>
+    <Layout>
+      <HomeSectionRenderer sections={homeSections} />
+    </Layout>
   );
 }

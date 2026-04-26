@@ -1,11 +1,52 @@
 import type { TranslationShape } from "./en";
 
 const fr: TranslationShape = {
+  common: {
+    all:        "Tout",
+    loading:    "Chargement…",
+    error:      "Une erreur est survenue.",
+    learnMore:  "En savoir plus",
+    readMore:   "Lire la suite",
+    viewAll:    "Tout voir",
+    back:       "Retour",
+    next:       "Suivant",
+    previous:   "Précédent",
+    open:       "Ouvrir",
+    close:      "Fermer",
+    placeholder:"Espace réservé",
+    comingSoon: "Bientôt disponible",
+  },
+
   nav: {
-    home:     "Accueil",
-    projects: "Projets",
-    about:    "À propos",
-    contact:  "Contact",
+    skipToContent: "Aller au contenu",
+    openMenu:      "Ouvrir le menu",
+    closeMenu:     "Fermer le menu",
+  },
+
+  breadcrumbs: {
+    home: "Accueil",
+  },
+
+  language: {
+    label: "Langue",
+  },
+
+  page: {
+    introLabel:    "Introduction",
+    overviewLabel: "Aperçu",
+    sectionsLabel: "Sections",
+  },
+
+  filters: {
+    label:               "Filtrer",
+    yearFrom:            "De",
+    yearTo:              "À",
+    locationPlaceholder: "Tous les lieux",
+    locationAllGroups:   "Toutes les régions",
+    activeCount:         "actif(s)",
+    clearAll:            "Effacer tous les filtres",
+    clearGroup:          "Effacer",
+    noResults:           "Aucun résultat ne correspond à ces filtres.",
   },
 
   projects: {
@@ -16,7 +57,6 @@ const fr: TranslationShape = {
     filterLabel:  "Filtrer",
     clearFilters: "Effacer tous les filtres",
     clearGroup:   "Effacer",
-
     card: {
       viewProject: "Voir le projet",
       year:        "Année",
@@ -27,22 +67,11 @@ const fr: TranslationShape = {
       client:      "Client",
       status:      "Statut",
     },
-
     status: {
       completed:  "Terminé",
       inProgress: "En cours",
       concept:    "Concept",
     },
-  },
-
-  filters: {
-    yearFrom:    "De",
-    yearTo:      "À",
-
-    locationPlaceholder: "Tous les lieux",
-    locationAllGroups:   "Toutes les régions",
-
-    activeCount: "actif(s)",
   },
 
   stats: {
@@ -55,10 +84,20 @@ const fr: TranslationShape = {
     noData:     "—",
   },
 
-  common: {
-    all:     "Tout",
-    loading: "Chargement…",
-    error:   "Une erreur est survenue.",
+  form: {
+    submit:        "Envoyer",
+    sending:       "Envoi…",
+    success:       "Merci — nous reviendrons vers vous.",
+    failure:       "Une erreur est survenue. Veuillez réessayer.",
+    requiredMark:  "*",
+    optionalLabel: "(facultatif)",
+    selectOption:  "Sélectionner…",
+    fileHint:      "Glisser-déposer ou parcourir",
+  },
+
+  footer: {
+    rights:    "Tous droits réservés.",
+    languages: "Langues",
   },
 };
 

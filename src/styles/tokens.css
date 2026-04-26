@@ -1,0 +1,111 @@
+/**
+ * DESIGN TOKENS
+ * ─────────────
+ * Single place that holds all visual primitives. Replace values here
+ * to switch the entire site to a new design system.
+ *
+ * Tokens are exposed as CSS custom properties so they work both in
+ * inline styles (Framer Motion) and in Tailwind utilities (via the
+ * `theme.extend.colors` mapping in tailwind.config.ts).
+ *
+ * Naming conventions:
+ *   --color-*    semantic colors
+ *   --space-*    spacing scale
+ *   --font-*     typography
+ *   --radius-*   border radius
+ *   --shadow-*   elevation
+ *   --bp-*       breakpoint reference (read-only — used in JS hooks)
+ *   --z-*        z-index scale
+ */
+
+:root {
+  /* ── Colors — neutral placeholder palette ───────────────── */
+  --color-bg:           #FFFFFF;
+  --color-surface:      #F5F5F5;
+  --color-surface-alt:  #EAEAEA;
+  --color-border:       #E1E1E1;
+  --color-text:         #1A1A1A;
+  --color-text-muted:   #6B6B6B;
+  --color-text-subtle:  #999999;
+  --color-accent:       #1A1A1A;        /* swap later for brand accent */
+  --color-accent-fg:    #FFFFFF;
+  --color-focus-ring:   rgba(26, 26, 26, 0.35);
+
+  /* ── Spacing scale (rem-based) ──────────────────────────── */
+  --space-0:  0;
+  --space-1:  0.25rem;   /* 4 */
+  --space-2:  0.5rem;    /* 8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+  --space-10: 8rem;      /* 128 */
+
+  /* ── Section paddings ───────────────────────────────────── */
+  --section-pad-block: var(--space-9);
+  --container-max:     1200px;
+  --container-pad-x:   var(--space-5);
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-sans:    var(--font-dm-sans, system-ui), -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-syne, var(--font-sans));
+  --font-mono:    "SF Mono", ui-monospace, Menlo, monospace;
+
+  --fs-xs:   0.75rem;
+  --fs-sm:   0.875rem;
+  --fs-base: 1rem;
+  --fs-md:   1.125rem;
+  --fs-lg:   1.25rem;
+  --fs-xl:   1.5rem;
+  --fs-2xl:  2rem;
+  --fs-3xl:  2.75rem;
+  --fs-4xl:  4rem;
+
+  --lh-tight:  1.1;
+  --lh-snug:   1.25;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+
+  /* ── Borders & radius ───────────────────────────────────── */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+  /* ── z-index scale ──────────────────────────────────────── */
+  --z-base:    1;
+  --z-content: 10;
+  --z-header:  100;
+  --z-overlay: 500;
+  --z-modal:   1000;
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:    160ms;
+  --dur-base:    240ms;
+  --dur-slow:    420ms;
+
+  /* ── Breakpoints (reference values, mirror tailwind.config.ts) ─ */
+  --bp-sm:  640px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1536px;
+}
+
+/* RTL helpers — automatically flip directional properties via logical
+   properties. Templates use `padding-inline`, `margin-inline`, etc. */
+[dir="rtl"] {
+  /* Override per-locale tokens here if needed in future. */
+}

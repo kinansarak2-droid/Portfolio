@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
-import Cursor from "@/components/layout/Cursor";
-import Navbar from "@/components/layout/Navbar";
 import { LocaleProvider } from "@/context/LocaleContext";
+import { siteIdentity } from "@/config/site";
 import "./globals.css";
 
 const syne = Syne({
@@ -18,9 +17,12 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Sarakbi Sport — Architect & UX Designer",
-  description:
-    "Portfolio of Sarakbi Sport — Architecture, UX Design, and Computational Interaction.",
+  title: {
+    default: `${siteIdentity.name} — Sports facility construction & systems`,
+    template: `%s · ${siteIdentity.name}`,
+  },
+  description: siteIdentity.description.en,
+  metadataBase: new URL(siteIdentity.url),
 };
 
 export default function RootLayout({
@@ -31,11 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body>
-        <LocaleProvider>
-          <Cursor />
-          <Navbar />
-          {children}
-        </LocaleProvider>
+        <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
   );

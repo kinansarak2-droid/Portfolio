@@ -1,18 +1,66 @@
 /**
- * English translations — site-wide UI strings.
- * Key structure mirrors fr.ts and ar.ts exactly.
- * Add new keys to all three files at the same time.
+ * English translations — site-wide UI chrome only.
  *
- * NOTE: Filter group labels and option labels live in src/data/filters.ts
- * as LocalizedString objects — they are NOT duplicated here.
- * This file only holds UI chrome that surrounds the filter controls.
+ * What lives here:
+ *   • Reusable button / form labels
+ *   • Generic words used across pages (loading, error, etc.)
+ *   • UI strings that wrap content (filter labels, breadcrumbs, etc.)
+ *
+ * What does NOT live here:
+ *   • Page section content (heroes, descriptions) → src/data/*.ts
+ *   • Navigation labels                          → src/config/site.ts
+ *   • Category titles                             → src/data/*.ts
+ *
+ * Add a new key here, then mirror it in fr.ts and ar.ts. TypeScript
+ * will fail to compile if any locale is missing a key.
  */
 const en = {
+  common: {
+    all:        "All",
+    loading:    "Loading…",
+    error:      "Something went wrong.",
+    learnMore:  "Learn more",
+    readMore:   "Read more",
+    viewAll:    "View all",
+    back:       "Back",
+    next:       "Next",
+    previous:   "Previous",
+    open:       "Open",
+    close:      "Close",
+    placeholder:"Placeholder",
+    comingSoon: "Coming soon",
+  },
+
   nav: {
-    home:     "Home",
-    projects: "Projects",
-    about:    "About",
-    contact:  "Contact",
+    skipToContent: "Skip to content",
+    openMenu:      "Open menu",
+    closeMenu:     "Close menu",
+  },
+
+  breadcrumbs: {
+    home: "Home",
+  },
+
+  language: {
+    label: "Language",
+  },
+
+  page: {
+    introLabel:    "Introduction",
+    overviewLabel: "Overview",
+    sectionsLabel: "Sections",
+  },
+
+  filters: {
+    label:               "Filter",
+    yearFrom:            "From",
+    yearTo:              "To",
+    locationPlaceholder: "All locations",
+    locationAllGroups:   "All regions",
+    activeCount:         "active",
+    clearAll:            "Clear all filters",
+    clearGroup:          "Clear",
+    noResults:           "No results match these filters.",
   },
 
   projects: {
@@ -23,8 +71,6 @@ const en = {
     filterLabel:  "Filter",
     clearFilters: "Clear all filters",
     clearGroup:   "Clear",
-
-    // Labels used on project cards / detail pages
     card: {
       viewProject: "View project",
       year:        "Year",
@@ -35,46 +81,37 @@ const en = {
       client:      "Client",
       status:      "Status",
     },
-
     status: {
-      completed:   "Completed",
-      inProgress:  "In Progress",
-      concept:     "Concept",
+      completed:  "Completed",
+      inProgress: "In Progress",
+      concept:    "Concept",
     },
   },
 
-  // ── Filter toolbar chrome ─────────────────────────────────
-  // Option / chip labels live in filters.ts as LocalizedStrings.
-  // Only UI strings that wrap the controls belong here.
-  filters: {
-    // Range slider (year)
-    yearFrom:     "From",
-    yearTo:       "To",
-
-    // Location dropdown
-    locationPlaceholder: "All locations",
-    locationAllGroups:   "All regions",
-
-    // Active count badge, e.g. "3 active"
-    activeCount:  "active",
-  },
-
-  // ── Stats panel ───────────────────────────────────────────
-  // Shown in the top-right panel of the filter toolbar
   stats: {
-    projects:   "Projects",        // count of matching projects
-    area:       "Total Area",      // sum of areaSqm
+    projects:   "Projects",
+    area:       "Total Area",
     areaUnit:   "m²",
-    locations:  "Locations",       // unique location count
-    topSport:   "Top Sport",       // most frequent sport
-    topSurface: "Top Surface",     // most frequent surface
-    noData:     "—",               // shown when value is undefined
+    locations:  "Locations",
+    topSport:   "Top Sport",
+    topSurface: "Top Surface",
+    noData:     "—",
   },
 
-  common: {
-    all:      "All",
-    loading:  "Loading…",
-    error:    "Something went wrong.",
+  form: {
+    submit:        "Send",
+    sending:       "Sending…",
+    success:       "Thank you — we'll be in touch.",
+    failure:       "Something went wrong. Please try again.",
+    requiredMark:  "*",
+    optionalLabel: "(optional)",
+    selectOption:  "Select…",
+    fileHint:      "Drag and drop, or browse",
+  },
+
+  footer: {
+    rights:    "All rights reserved.",
+    languages: "Languages",
   },
 } as const;
 

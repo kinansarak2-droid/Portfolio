@@ -1,35 +1,69 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Tailwind config consumes the same design tokens defined in
+ * `src/styles/tokens.css`. Replacing the design system means editing
+ * one CSS file (tokens.css) — these mappings stay the same.
+ */
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/templates/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      // ─── Colors ──────────────────────────────────────────────
-      // Replace these with your brand colors
       colors: {
-        brand: {
-          primary: "#000000",   // TODO: set your primary color
-          secondary: "#ffffff", // TODO: set your secondary color
-          accent: "#ff0000",    // TODO: set your accent color
-        },
+        bg:           "var(--color-bg)",
+        surface:      "var(--color-surface)",
+        "surface-alt":"var(--color-surface-alt)",
+        border:       "var(--color-border)",
+        text:         "var(--color-text)",
+        "text-muted": "var(--color-text-muted)",
+        "text-subtle":"var(--color-text-subtle)",
+        accent:       "var(--color-accent)",
+        "accent-fg":  "var(--color-accent-fg)",
       },
-      // ─── Typography ──────────────────────────────────────────
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        sans:    ["var(--font-sans)"],
+        display: ["var(--font-display)"],
+        mono:    ["var(--font-mono)"],
       },
-      // ─── Spacing ─────────────────────────────────────────────
       spacing: {
-        "section": "120px", // standard section vertical padding
+        section: "var(--section-pad-block)",
       },
-      // ─── Animation ───────────────────────────────────────────
+      maxWidth: {
+        container: "var(--container-max)",
+      },
+      borderRadius: {
+        xs:   "var(--radius-xs)",
+        sm:   "var(--radius-sm)",
+        md:   "var(--radius-md)",
+        lg:   "var(--radius-lg)",
+        xl:   "var(--radius-xl)",
+        full: "var(--radius-full)",
+      },
+      boxShadow: {
+        xs: "var(--shadow-xs)",
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+      },
       transitionTimingFunction: {
-        "smooth": "cubic-bezier(0.16, 1, 0.3, 1)",
+        smooth: "var(--ease-smooth)",
+      },
+      transitionDuration: {
+        fast: "160ms",
+        base: "240ms",
+        slow: "420ms",
+      },
+      screens: {
+        sm:  "640px",
+        md:  "768px",
+        lg:  "1024px",
+        xl:  "1280px",
+        "2xl": "1536px",
       },
     },
   },
